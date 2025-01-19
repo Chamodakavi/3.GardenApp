@@ -1,0 +1,143 @@
+import { Link } from "expo-router";
+import React, { useState } from "react";
+import { TouchableOpacity } from "react-native";
+import { StyleSheet, View, Dimensions, Image, TextInput, Text } from "react-native";
+
+import Icon from "react-native-vector-icons/MaterialCommunityIcons"; 
+
+const { height } = Dimensions.get("window");
+
+export default function Welcome() {
+  const [passwordVisible, setPasswordVisible] = useState(false); 
+
+  return (
+    <View style={styles.container}>
+
+      <View style={styles.halfHeightContainer}>
+        <Image style={styles.logo} source={require("../assets/images/a.png")} />
+
+        <View style={styles.linkcontainer}>
+          <View style={styles.HStack}>
+            <Text style={styles.textBorderBottom} >
+              Login
+            </Text>
+            <Link href='/acc'>
+              <Text style={{ letterSpacing: 4 }} >
+                Sign-up
+              </Text>
+            </Link>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.container2}>
+        <View>
+          <Text >Email address / User name :</Text>
+          <TextInput style={styles.input} placeholder=" johndoe@gmail.com" />
+        </View>
+
+        <View style={{ paddingTop: 30 }}>
+          <Text >Password :</Text>
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder=" Enter your password"
+              secureTextEntry={!passwordVisible} 
+            />
+            <Icon
+              name={passwordVisible ? "eye-off" : "eye"} 
+              size={24}
+              color="black"
+              onPress={() => setPasswordVisible(!passwordVisible)} 
+              style={styles.eyeIcon}
+            />
+          </View>
+        </View>
+
+        <Text
+          
+          style={{ paddingTop: 50, color: "#228008", fontWeight: "bold" }}
+        >
+          Forgot passcode ?
+        </Text>
+
+        <View style={{ width: "100%", alignItems: "center" }}>
+          <TouchableOpacity  style={styles.btn} >
+            <Text>Login</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    height: height,
+    backgroundColor: "#E9F2E6",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  halfHeightContainer: {
+    height: height * 0.35,
+    backgroundColor: "#fff",
+    width: "100%",
+    position: "absolute",
+    top: 0,
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
+  },
+  logo: {
+    width: 350,
+    height: 250,
+    resizeMode: "contain",
+    position: "relative",
+    left: 40,
+  },
+  HStack: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    width: "99%",
+    justifyContent: "space-around",
+  },
+  linkcontainer: {
+    marginTop: 10,
+  },
+  textBorderBottom: {
+    letterSpacing: 4,
+    borderStyle: "solid",
+    padding: 10,
+    borderBottomColor: "black",
+    borderBottomWidth: 2,
+  },
+  input: {
+    width: "90%",
+    borderBottomColor: "#C2C2B9",
+    borderStyle: "solid",
+    borderBottomWidth: 2,
+    lineHeight: 30,
+  },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    justifyContent: "space-between",
+  },
+  eyeIcon: {
+    position: "relative",
+    left: -40,
+  },
+  container2: {
+    position: "fixed",
+    top: 100,
+    width: "100%",
+    paddingLeft: 40,
+  },
+  btn: {
+    marginTop: 50,
+    lineHeight: 80,
+    width: "80%",
+    color:'black'
+  },
+});
