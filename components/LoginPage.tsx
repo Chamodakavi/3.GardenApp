@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   ScrollView,
@@ -20,6 +20,11 @@ const { height, width } = Dimensions.get("window");
 
 export default function Welcome() {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const router = useRouter(); 
+
+  const handleTouch = () =>{
+    router.push("/home");
+  }
 
   return (
     <View style={styles.container}>
@@ -29,7 +34,7 @@ export default function Welcome() {
             style={styles.logo}
             source={require("../assets/images/a.png")}
           />
-        <Text style={styles.logoName}>Farmown</Text>
+        <Text style={styles.logoName}>FarmOwn</Text>
         </View>
 
 
@@ -38,7 +43,7 @@ export default function Welcome() {
             <Link style={styles.linkStyle} href="/">
               <Text style={styles.textBorderBottom} >Login</Text>
             </Link>
-            <Link style={styles.linkStyle} href="/home">
+            <Link style={styles.linkStyle} href="/signup">
               <Text >Sign-up</Text>
             </Link>
           </View>
@@ -72,7 +77,7 @@ export default function Welcome() {
         <Text style={styles.forgotPassText}>Forgot passcode ?</Text>
 
         <View style={styles.loginButtonContainer}>
-          <TouchableOpacity style={styles.loginButton}>
+          <TouchableOpacity style={styles.loginButton} onPress={handleTouch}>
             <Text style={styles.btn}>Login</Text>
           </TouchableOpacity>
         </View>
@@ -120,7 +125,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: wp(60),
-    justifyContent: "space-between", // space-between ensures a better balance
+    justifyContent: "space-between",
   },
   linkStyle: {
     fontSize: wp(5),
