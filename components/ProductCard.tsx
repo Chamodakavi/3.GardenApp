@@ -1,5 +1,6 @@
+import { Link } from "expo-router";
 import React from "react";
-import { StyleSheet, View, Dimensions, Image, Text } from "react-native";
+import { StyleSheet, View, Dimensions, Image, Text, TouchableOpacity } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -15,24 +16,37 @@ interface ProductCardProps {
 const { height, width } = Dimensions.get("window");
 
 export default function ProductCard({ title, para, price }: ProductCardProps) {
-  return (
-    <View style={styles.container}>
-      
-      <View style={styles.imageContainer}>
-        <Image
-          source={require("../assets/images/im.jpg")}
-          style={styles.image}
-          resizeMode="contain"
-        />
-      </View>
 
-     
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
-        {/* <Text style={styles.para}>{para}</Text> */}
-        <Text style={styles.price}>{price}</Text>
-      </View>
-    </View>
+
+
+
+  return (
+    <TouchableOpacity >
+     <Link
+        href={{
+          pathname: "/product/details", 
+          params: { title, para, price }, 
+        }}
+      >
+        <View style={styles.container}>
+          
+          <View style={styles.imageContainer}>
+            <Image
+              source={require("../assets/images/im.jpg")}
+              style={styles.image}
+              resizeMode="contain"
+            />
+          </View>
+    
+         
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>{title}</Text>
+            {/* <Text style={styles.para}>{para}</Text> */}
+            <Text style={styles.price}>{price}</Text>
+          </View>
+        </View>
+     </Link>
+    </TouchableOpacity>
   );
 }
 
@@ -52,7 +66,7 @@ const styles = StyleSheet.create({
     height: hp(20),
   },
   textContainer: {
-    marginLeft:wp(9),
+    marginLeft:wp(1),
   },
   title: {
     fontSize: wp(4.5),

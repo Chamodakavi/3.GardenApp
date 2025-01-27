@@ -28,6 +28,10 @@ export default function Seeds() {
 
      const router = useRouter();
 
+     const handleeditprofile = () =>{
+      router.push("/profile/editprofile");
+     }
+
   return (
     <ImageBackground
       style={styles.container}
@@ -46,7 +50,7 @@ export default function Seeds() {
             <Text style={styles.headerText}>My Profile Name</Text>
           </View>
 
-          <TouchableOpacity style={styles.editProfileBtn}>
+          <TouchableOpacity style={styles.editProfileBtn} onPress={handleeditprofile} >
             <Text style={styles.editProfileText}>Edit Profile</Text>
           </TouchableOpacity>
         </View>
