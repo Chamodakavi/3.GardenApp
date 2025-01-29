@@ -94,8 +94,8 @@ export default function Home() {
               {[
                 { name: "Organic Seeds", link: "/product/organic" },
                 { name: "Tools and Equipments", link: "/product/tools" },
-                { name: "Sustainable Way of Life", link: "/" },
-                { name: "Discover Us", link: "/" },
+                { name: "Sustainable Way of Life", link: "/swl" },
+                // { name: "Discover Us", link: "/" },
               ].map((item, index) => (
                 <Link key={index} href={item.link} style={{margin:wp(3)}}>
                   <View style={styles.gridItem}>

@@ -22,7 +22,7 @@ export default function Footer() {
 
       <TouchableOpacity
         style={styles.footerItem}
-        onPress={() => router.push("/signup")}
+        onPress={() => router.push("/swl")}
       >
         <Icon name="tree" size={hp(3)} color="#228008" />
         <Text style={styles.footerText}>SWL</Text>
