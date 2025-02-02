@@ -15,7 +15,7 @@ export default function Index() {
   
     
 
-      <StatusBar style="light" backgroundColor="black" />
+      {/* <StatusBar style="light" backgroundColor="black" /> */}
     </View>
   );
 }
