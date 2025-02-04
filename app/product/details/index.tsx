@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer";
-import { Link } from "expo-router";
-import React from "react";
+import { Link, useNavigation } from "expo-router";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -21,11 +21,21 @@ import ProductCard from "../../../components/ProductCard";
 
 import { seeds, tools } from "@/Data/Data";
 import { useGlobalSearchParams } from "expo-router";
+
+import { Ionicons } from "@expo/vector-icons";
+
 const { height, width } = Dimensions.get("window");
 
 export default function Seeds({ route }: { route: any }) {
 
   const { title, para, price } = useGlobalSearchParams();
+
+  const [quantity, setQuantity] = useState(1);
+
+  const increaseQuantity = () => setQuantity(quantity + 1);
+  const decreaseQuantity = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
+
+  const navigation = useNavigation();
 
   return (
     <ScrollView style={detailsStyles.container}>
@@ -37,6 +47,31 @@ export default function Seeds({ route }: { route: any }) {
     <Text style={detailsStyles.title}>{title}</Text>
     <Text style={detailsStyles.para}>{para}</Text>
     <Text style={detailsStyles.price}>{price}</Text>
+
+    <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}
+      >
+        <Ionicons name="arrow-back" size={wp(7)} color="#333" />
+      </TouchableOpacity>
+
+    <View style={detailsStyles.quantityContainer}>
+
+        <Text style={{
+          fontSize: wp(5),
+          color: "#666",
+          marginTop: hp(0),
+          textAlign: "left",
+        }}>Quantity : </Text>
+        <TouchableOpacity style={detailsStyles.quantityButton} onPress={decreaseQuantity}>
+          <Text style={detailsStyles.quantityText}>-</Text>
+        </TouchableOpacity>
+        <Text style={detailsStyles.quantityValue}>{quantity}</Text>
+        <TouchableOpacity style={detailsStyles.quantityButton} onPress={increaseQuantity}>
+          <Text style={detailsStyles.quantityText}>+</Text>
+        </TouchableOpacity>
+      </View>
+
 
     <View style={detailsStyles.buttonContainer}>
       <TouchableOpacity style={detailsStyles.button}>
@@ -132,16 +167,30 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: wp(4),
   },
+  backButton: {
+    position: "absolute",
+    top: hp(4),
+    right: wp(5),
+    zIndex: 10,
+    backgroundColor: "#FFF",
+    borderRadius: wp(5),
+    padding: wp(2),
+    elevation: 5, 
+    shadowColor: "#000", 
+    shadowOffset: { width: 0, height: hp(0.5) },
+    shadowOpacity: 0.3,
+    shadowRadius: hp(0.7),
+  },
 });
 const detailsStyles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: wp(5),
+    padding: wp(2),
     backgroundColor: "#fff",
   },
   image: {
-    width: wp(80),
-    height: hp(30),
+    width: wp(100),
+    height: hp(40),
     alignSelf: "center",
     marginBottom: hp(2),
   },
@@ -150,41 +199,64 @@ const detailsStyles = StyleSheet.create({
     fontWeight: "bold",
     color: "#333",
     marginBottom: hp(1),
-    textAlign: "center",
+    textAlign: "left",
   },
   para: {
     fontSize: wp(4.5),
     color: "#666",
     marginBottom: hp(2),
-    textAlign: "justify",
+    textAlign: "left",
   },
   price: {
     fontSize: wp(5),
     fontWeight: "bold",
     color: "#228008",
-    textAlign: "center",
+    textAlign: "left",
     marginBottom: hp(2),
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: hp(2),
+    justifyContent: "space-between",
+    position:'fixed',
+    top:hp(22),
   },
   button: {
     backgroundColor: "#228008",
     paddingVertical: hp(1.5),
     paddingHorizontal: wp(5),
     borderRadius: 10,
+    width:wp(45),
   },
   buttonBuyNow: {
     backgroundColor: "#007BFF",
     paddingVertical: hp(1.5),
     paddingHorizontal: wp(5),
     borderRadius: 10,
+    width:wp(45),
   },
   buttonText: {
     color: "#fff",
     fontSize: wp(4.5),
     textAlign: "center",
+  },
+  quantityContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginBottom: hp(2),
+  },
+  quantityButton: {
+    backgroundColor: "#ddd",
+    padding: wp(3),
+    borderRadius: 5,
+  },
+  quantityText: {
+    fontSize: wp(4),
+    fontWeight: "bold",
+  },
+  quantityValue: {
+    fontSize: wp(5),
+    marginHorizontal: wp(4),
+    fontWeight: "bold",
   },
 });

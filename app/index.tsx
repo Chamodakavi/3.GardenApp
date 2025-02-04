@@ -1,9 +1,7 @@
 
-import { StyleSheet, Text, View } from "react-native";
-import { StatusBar } from "expo-status-bar";
+import { StyleSheet, View } from "react-native";
 import LoginPage from "@/components/LoginPage";
 
-import Welcome from "@/components/Welcome";
 
 
 export default function Index() {
@@ -15,7 +13,7 @@ export default function Index() {
   
     
 
-      {/* <StatusBar style="light" backgroundColor="black" /> */}
+     
     </View>
   );
 }
