@@ -39,7 +39,7 @@ export default function Seeds() {
                 color: "#228008",
               }}
             >
-             and Equipments
+              and Equipments
             </Text>
           </Text>
           <Text style={styles.headerPara}>
@@ -49,7 +49,6 @@ export default function Seeds() {
 
         <View style={styles.main}>
           <View style={{ width: wp(100), marginVertical: hp(1) }}>
-
             <View style={styles.containero}>
               {tools.map((tool) => (
                 <View style={styles.gridItem} key={tool.index}>
@@ -57,13 +56,11 @@ export default function Seeds() {
                     title={tool.name}
                     para={tool.description}
                     price={tool.price}
+                    image={tool.image}
                   />
                 </View>
               ))}
             </View>
-
-          
-
           </View>
         </View>
       </ScrollView>
@@ -141,12 +138,12 @@ const styles = StyleSheet.create({
     marginBottom: hp(1),
     backgroundColor: "#f7f9f7",
     borderRadius: 10,
-    overflow: "hidden", 
-    shadowColor: "#000", 
+    overflow: "hidden",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
-    elevation: 5, 
+    elevation: 5,
     padding: wp(3),
     justifyContent: "center",
     alignItems: "center",

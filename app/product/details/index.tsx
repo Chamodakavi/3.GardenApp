@@ -27,8 +27,7 @@ import { Ionicons } from "@expo/vector-icons";
 const { height, width } = Dimensions.get("window");
 
 export default function Seeds({ route }: { route: any }) {
-
-  const { title, para, price } = useGlobalSearchParams();
+  const { title, para, price, image } = useGlobalSearchParams();
 
   const [quantity, setQuantity] = useState(1);
 
@@ -39,49 +38,57 @@ export default function Seeds({ route }: { route: any }) {
 
   return (
     <ScrollView style={detailsStyles.container}>
-    <Image
-      source={require("../../../assets/images/im.jpg")}
-      style={detailsStyles.image}
-      resizeMode="contain"
-    />
-    <Text style={detailsStyles.title}>{title}</Text>
-    <Text style={detailsStyles.para}>{para}</Text>
-    <Text style={detailsStyles.price}>{price}</Text>
+      <Image
+        source={{ uri: image }}
+        style={detailsStyles.image}
+        resizeMode="contain"
+      />
+      <Text style={detailsStyles.title}>{title}</Text>
+      <Text style={detailsStyles.para}>{para}</Text>
+      <Text style={detailsStyles.price}>{price}</Text>
 
-    <TouchableOpacity
+      <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.goBack()}
       >
         <Ionicons name="arrow-back" size={wp(7)} color="#333" />
       </TouchableOpacity>
 
-    <View style={detailsStyles.quantityContainer}>
-
-        <Text style={{
-          fontSize: wp(5),
-          color: "#666",
-          marginTop: hp(0),
-          textAlign: "left",
-        }}>Quantity : </Text>
-        <TouchableOpacity style={detailsStyles.quantityButton} onPress={decreaseQuantity}>
+      <View style={detailsStyles.quantityContainer}>
+        <Text
+          style={{
+            fontSize: wp(5),
+            color: "#666",
+            marginTop: hp(0),
+            textAlign: "left",
+          }}
+        >
+          Quantity :{" "}
+        </Text>
+        <TouchableOpacity
+          style={detailsStyles.quantityButton}
+          onPress={decreaseQuantity}
+        >
           <Text style={detailsStyles.quantityText}>-</Text>
         </TouchableOpacity>
         <Text style={detailsStyles.quantityValue}>{quantity}</Text>
-        <TouchableOpacity style={detailsStyles.quantityButton} onPress={increaseQuantity}>
+        <TouchableOpacity
+          style={detailsStyles.quantityButton}
+          onPress={increaseQuantity}
+        >
           <Text style={detailsStyles.quantityText}>+</Text>
         </TouchableOpacity>
       </View>
 
-
-    <View style={detailsStyles.buttonContainer}>
-      <TouchableOpacity style={detailsStyles.button}>
-        <Text style={detailsStyles.buttonText}>Add to Cart</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={detailsStyles.buttonBuyNow}>
-        <Text style={detailsStyles.buttonText}>Buy Now</Text>
-      </TouchableOpacity>
-    </View>
-  </ScrollView>
+      <View style={detailsStyles.buttonContainer}>
+        <TouchableOpacity style={detailsStyles.button}>
+          <Text style={detailsStyles.buttonText}>Add to Cart</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={detailsStyles.buttonBuyNow}>
+          <Text style={detailsStyles.buttonText}>Buy Now</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 }
 
@@ -153,12 +160,12 @@ const styles = StyleSheet.create({
     marginBottom: hp(1),
     backgroundColor: "#f7f9f7",
     borderRadius: 10,
-    overflow: "hidden", 
-    shadowColor: "#000", 
+    overflow: "hidden",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
-    elevation: 5, 
+    elevation: 5,
     padding: wp(3),
     justifyContent: "center",
     alignItems: "center",
@@ -175,8 +182,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     borderRadius: wp(5),
     padding: wp(2),
-    elevation: 5, 
-    shadowColor: "#000", 
+    elevation: 5,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: hp(0.5) },
     shadowOpacity: 0.3,
     shadowRadius: hp(0.7),
@@ -217,22 +224,22 @@ const detailsStyles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    position:'fixed',
-    top:hp(22),
+    position: "fixed",
+    top: hp(22),
   },
   button: {
     backgroundColor: "#228008",
     paddingVertical: hp(1.5),
     paddingHorizontal: wp(5),
     borderRadius: 10,
-    width:wp(45),
+    width: wp(45),
   },
   buttonBuyNow: {
     backgroundColor: "#007BFF",
     paddingVertical: hp(1.5),
     paddingHorizontal: wp(5),
     borderRadius: 10,
-    width:wp(45),
+    width: wp(45),
   },
   buttonText: {
     color: "#fff",

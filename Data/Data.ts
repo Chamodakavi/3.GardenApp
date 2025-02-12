@@ -4,7 +4,7 @@ export const seeds = [
     name: "Sunflower Gold",
     price: "$5.99",
     description: "Bright and cheerful sunflowers that grow up to 6 feet tall.",
-    image: "https://via.placeholder.com/150/FFCC00/000000?text=Sunflower",
+    image: "https://i.pinimg.com/originals/29/e6/3f/29e63f1dc94a78685f34dc898e471703.jpg",
   },
   {
     index: 2,
@@ -12,14 +12,14 @@ export const seeds = [
     price: "$3.49",
     description:
       "Fragrant and flavorful basil leaves perfect for culinary use.",
-    image: "https://via.placeholder.com/150/006400/FFFFFF?text=Basil",
+    image: "https://th.bing.com/th/id/R.837fd5799265bdfa77c2769cce0b3033?rik=WKAowsxIe2eK5A&pid=ImgRaw&r=0",
   },
   {
     index: 3,
     name: "Tomato Scarlet",
     price: "$2.99",
     description: "Vibrant red tomatoes that grow easily in all climates.",
-    image: "https://via.placeholder.com/150/FF6347/FFFFFF?text=Tomato",
+    image: "https://th.bing.com/th/id/OIP.x4e8G7lf4WRL2dAU02S04QHaHa?rs=1&pid=ImgDetMain",
   },
   {
     index: 4,
@@ -27,28 +27,28 @@ export const seeds = [
     price: "$4.50",
     description:
       "Sweet and crisp carrots, a must-have for any vegetable garden.",
-    image: "https://via.placeholder.com/150/FFA500/000000?text=Carrot",
+    image: "https://th.bing.com/th/id/OIP.MAIgGI6xRjMVX4mHIl_GtgHaFY?rs=1&pid=ImgDetMain",
   },
   {
     index: 5,
     name: "Spinach Delite",
     price: "$3.99",
     description: "A fast-growing, nutritious leafy green rich in vitamins.",
-    image: "https://via.placeholder.com/150/228B22/FFFFFF?text=Spinach",
+    image: "https://th.bing.com/th/id/OIP.gap5p6MNx2g_Jp7nfRMpeQHaFk?rs=1&pid=ImgDetMain",
   },
   {
     index: 6,
     name: "Cucumber Crunch",
     price: "$4.99",
     description: "Cool and refreshing cucumbers perfect for salads and snacks.",
-    image: "https://via.placeholder.com/150/32CD32/FFFFFF?text=Cucumber",
+    image: "https://th.bing.com/th/id/OIP.HOUQ7nkoMlYq1-z8tC3WmgHaHa?rs=1&pid=ImgDetMain",
   },
   {
     index: 7,
     name: "Lettuce Romaine",
     price: "$3.19",
     description: "Crisp and tender romaine lettuce ideal for salads.",
-    image: "https://via.placeholder.com/150/90EE90/000000?text=Lettuce",
+    image: "https://th.bing.com/th/id/OIP.oLGwIgkJKRa-sQimfEku7QHaFl?rs=1&pid=ImgDetMain",
   },
   {
     index: 8,
@@ -56,7 +56,7 @@ export const seeds = [
     price: "$5.49",
     description:
       "Sweet bell peppers in vibrant red, yellow, and orange colors.",
-    image: "https://via.placeholder.com/150/FF4500/FFFFFF?text=Pepper",
+    image: "https://th.bing.com/th/id/OIP.o_hjTo04VX-qsfarQfnezQAAAA?rs=1&pid=ImgDetMain",
   },
   {
     index: 9,
@@ -64,7 +64,7 @@ export const seeds = [
     price: "$6.29",
     description:
       "Delicious and juicy strawberries perfect for summer desserts.",
-    image: "https://via.placeholder.com/150/FF1493/FFFFFF?text=Strawberry",
+    image: "https://th.bing.com/th/id/OIP.BWLKoBJiuuQoMl_j-mrbQgHaGc?rs=1&pid=ImgDetMain",
   },
   {
     index: 10,
@@ -72,7 +72,7 @@ export const seeds = [
     price: "$2.69",
     description:
       "Fast-growing radishes with a spicy kick and vibrant red skin.",
-    image: "https://via.placeholder.com/150/8B0000/FFFFFF?text=Radish",
+    image: "https://th.bing.com/th/id/OIP.wrE0ekFX2BDfI79zIkgfugHaFj?rs=1&pid=ImgDetMain",
   },
   // {
   //   "index": 11,
@@ -153,7 +153,7 @@ export const tools = [
     price: "$15.99",
     description:
       "Essential for tilling soil, removing weeds, and shaping rows in your garden.",
-    image: "https://via.placeholder.com/150/228B22/FFFFFF?text=Garden+Hoe",
+    image: "https://th.bing.com/th/id/OIP.gjX6qJj8sHstsjz1ry6ySQHaGP?rs=1&pid=ImgDetMain",
   },
   {
     index: 2,
@@ -161,7 +161,7 @@ export const tools = [
     price: "$12.50",
     description:
       "Durable shears perfect for trimming plants and small branches.",
-    image: "https://via.placeholder.com/150/556B2F/FFFFFF?text=Pruning+Shears",
+    image: "https://th.bing.com/th/id/OIP.lhFp1WqDE1m7KU4OJkHZSgHaHa?rs=1&pid=ImgDetMain",
   },
   {
     index: 3,
@@ -169,7 +169,7 @@ export const tools = [
     price: "$9.75",
     description:
       "Lightweight and durable can for watering plants with precision.",
-    image: "https://via.placeholder.com/150/6495ED/FFFFFF?text=Watering+Can",
+    image: "https://i5.walmartimages.com/asr/d52679e9-d9f9-472d-a646-fe1bef8054c8.3eb5b3d1d84272db66dae65f9e8489b6.jpeg",
   },
   {
     index: 4,
@@ -177,7 +177,7 @@ export const tools = [
     price: "$59.99",
     description:
       "Heavy-duty wheelbarrow ideal for transporting soil, plants, and tools.",
-    image: "https://via.placeholder.com/150/8B0000/FFFFFF?text=Wheelbarrow",
+    image: "https://th.bing.com/th/id/OIP.hyGofS5yMCC2IObfXHzv6wHaF7?rs=1&pid=ImgDetMain",
   },
   {
     index: 5,
@@ -185,7 +185,7 @@ export const tools = [
     price: "$18.30",
     description:
       "Strong rake for leveling soil, removing debris, and spreading mulch.",
-    image: "https://via.placeholder.com/150/FFA500/FFFFFF?text=Garden+Rake",
+    image: "https://th.bing.com/th/id/R.f7c9ffd1529ee52ea982a2878fe1d300?rik=FGK6XfvC9t92tg&pid=ImgRaw&r=0",
   },
   {
     index: 6,
@@ -193,7 +193,7 @@ export const tools = [
     price: "$24.95",
     description:
       "Handy tool for precise planting of seeds at the correct depth.",
-    image: "https://via.placeholder.com/150/FFD700/FFFFFF?text=Seed+Planter",
+    image: "https://cf.shopee.ph/file/c9d0ae122bfc7010ef506bd09ffb9665",
   },
   {
     index: 7,
@@ -201,7 +201,7 @@ export const tools = [
     price: "$39.99",
     description:
       "Efficient composting bin to recycle organic waste into nutrient-rich compost.",
-    image: "https://via.placeholder.com/150/32CD32/FFFFFF?text=Compost+Bin",
+    image: "https://th.bing.com/th/id/R.c67ad12a3c9386f7096d4f3ecb7599d9?rik=c%2bsziuaNCtNg0g&pid=ImgRaw&r=0",
   },
   {
     index: 8,
@@ -209,7 +209,7 @@ export const tools = [
     price: "$7.20",
     description:
       "Ergonomic trowel for digging, planting, and transplanting with ease.",
-    image: "https://via.placeholder.com/150/00CED1/FFFFFF?text=Garden+Trowel",
+    image: "https://th.bing.com/th/id/R.6f60dfa621e7a853c17d96e308761ef0?rik=LxB2flrlOItNSQ&pid=ImgRaw&r=0",
   },
   {
     index: 9,
@@ -217,7 +217,7 @@ export const tools = [
     price: "$79.99",
     description:
       "Comprehensive drip irrigation system to ensure efficient watering.",
-    image: "https://via.placeholder.com/150/1E90FF/FFFFFF?text=Irrigation+Kit",
+    image: "https://th.bing.com/th/id/OIP.TURFRHGeQPTtHtIM4Yo3UgHaHa?rs=1&pid=ImgDetMain",
   },
   {
     index: 10,
@@ -225,7 +225,7 @@ export const tools = [
     price: "$19.49",
     description:
       "Portable device to measure soil pH, moisture, and fertility levels.",
-    image: "https://via.placeholder.com/150/8B4513/FFFFFF?text=Soil+Tester",
+    image: "https://th.bing.com/th/id/OIP.eo93rQcHxjmhiGOVmLN0xQHaHa?rs=1&pid=ImgDetMain",
   },
 ];
 
@@ -249,7 +249,7 @@ export const instructions = [
         step: 2,
         text: "Prepare nutrient-rich, well-drained soil for planting.",
         image:
-          "https://th.bing.com/th/id/R.4d2cd7e98e372d9da7e273f8d7e65e6f?rik=Z2ob6DixX2VvIQ&riu=http%3a%2f%2fwww.nrcs.usda.gov%2fwps%2fwcm%2fconnect%2f4b7f650041d7d14f846cff1f8422a1ff%2fsoil-texture.jpg%3fMOD%3dAJPERES&ehk=wMdqlGlD5Xl%2b%2fuLVEw9pWAGsrh%2fjA2c%2bf%2bGHQ5eNOQs%3d&risl=&pid=ImgRaw&r=0",
+          "https://th.bing.com/th/id/OIP.2jVShMig9oywpA4wYctHNQHaEM?rs=1&pid=ImgDetMain",
       },
       {
         index: 3,

@@ -1,6 +1,13 @@
 import { Link } from "expo-router";
 import React from "react";
-import { StyleSheet, View, Dimensions, Image, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  Image,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -11,41 +18,41 @@ interface ProductCardProps {
   title: string;
   para: string;
   price: string;
+  image: any;
 }
 
 const { height, width } = Dimensions.get("window");
 
-export default function ProductCard({ title, para, price }: ProductCardProps) {
-
-
-
-
+export default function ProductCard({
+  title,
+  para,
+  price,
+  image,
+}: ProductCardProps) {
   return (
-    <TouchableOpacity >
-     <Link
+    <TouchableOpacity>
+      <Link
         href={{
-          pathname: "/product/details", 
-          params: { title, para, price }, 
+          pathname: "/product/details",
+          params: { title, para, price, image },
         }}
       >
         <View style={styles.container}>
-          
           <View style={styles.imageContainer}>
             <Image
-              source={require("../assets/images/im.jpg")}
+              source={{ uri: image }}
               style={styles.image}
               resizeMode="contain"
             />
           </View>
-    
-         
+
           <View style={styles.textContainer}>
             <Text style={styles.title}>{title}</Text>
             {/* <Text style={styles.para}>{para}</Text> */}
             <Text style={styles.price}>{price}</Text>
           </View>
         </View>
-     </Link>
+      </Link>
     </TouchableOpacity>
   );
 }
@@ -54,7 +61,7 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 20,
     marginVertical: hp(0.4),
-    overflow: "hidden", 
+    overflow: "hidden",
   },
   imageContainer: {
     alignItems: "center",
@@ -66,7 +73,7 @@ const styles = StyleSheet.create({
     height: hp(20),
   },
   textContainer: {
-    marginLeft:wp(1),
+    marginLeft: wp(1),
   },
   title: {
     fontSize: wp(4.5),
