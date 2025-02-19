@@ -97,7 +97,11 @@ export default function Home() {
                 { name: "Sustainable Way of Life", link: "/swl" },
                 // { name: "Discover Us", link: "/" },
               ].map((item, index) => (
-                <Link key={index} href={item.link} style={{margin:wp(3)}}>
+                <Link
+                  key={index}
+                  href={item.link as any}
+                  style={{ margin: wp(3) }}
+                >
                   <View style={styles.gridItem}>
                     <Text style={styles.gridText}>{item.name}</Text>
                   </View>

@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer";
 import { Link, useRouter } from "expo-router";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -21,15 +21,65 @@ import ProductCard from "../../components/ProductCard";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import { seeds, tools } from "@/Data/Data";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Context } from "../Context";
+import { doc, getDoc } from "firebase/firestore";
+import { database } from "@/Data/FConfig";
 
 const { height, width } = Dimensions.get("window");
 
-export default function Seeds() {
+export default function Profile() {
   const router = useRouter();
-
+  const [data, setData] = useState<any>(null);
+  const [name, setName] = useState("");
   const handleeditprofile = () => {
     router.push("/profile/editprofile");
   };
+
+  const context = useContext(Context);
+
+  if (!context) {
+    throw new Error("Context must be used within a ContextProvider");
+  }
+
+  const { userId, setUserId } = context;
+
+  const logout = () => {
+    setUserId("");
+    console.log("clear uid :" + userId);
+
+    router.replace("/");
+  };
+
+  useEffect(() => {
+    if (data) {
+      console.log("User ID updated: ", userId);
+      setData(data);
+      console.log(data);
+      setName(data.name);
+    }
+  }, [data]);
+  console.log(name);
+  useEffect(() => {
+    if (userId) {
+      const fetchUser = async () => {
+        try {
+          const userRef = doc(database, "users", userId);
+          const docSnap = await getDoc(userRef);
+
+          if (docSnap.exists()) {
+            setData(docSnap.data() as any);
+            console.log("User Data:", docSnap.data());
+          } else {
+            console.log("No user found with id:", userId);
+          }
+        } catch (error) {
+          console.error("Error fetching user:", error);
+        }
+      };
+
+      fetchUser();
+    }
+  }, [userId]);
 
   return (
     <ImageBackground
@@ -46,7 +96,7 @@ export default function Seeds() {
                 source={require("../../assets/images/profile.jpg")}
               />
             </View>
-            <Text style={styles.headerText}>My Profile Name</Text>
+            <Text style={styles.headerText}>{name}</Text>
           </View>
 
           <TouchableOpacity
@@ -85,10 +135,7 @@ export default function Seeds() {
           </View>
         </View>
 
-        <TouchableOpacity
-          style={styles.logoutButton}
-          onPress={() => router.replace("/")}
-        >
+        <TouchableOpacity style={styles.logoutButton} onPress={logout}>
           <Text style={styles.logoutText}>Log Out</Text>
         </TouchableOpacity>
       </ScrollView>

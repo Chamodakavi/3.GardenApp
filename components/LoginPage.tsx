@@ -1,5 +1,5 @@
 import { Link, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   ScrollView,
   TouchableOpacity,
@@ -20,6 +20,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { database } from "../Data/FConfig";
 import { ActivityIndicator } from "react-native";
 import { SkypeIndicator } from "react-native-indicators";
+import { Context } from "@/app/Context";
 
 const { height, width } = Dimensions.get("window");
 
@@ -27,9 +28,17 @@ export default function Welcome() {
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [userId, setUserId] = useState("");
+
   const [passwordVisible, setPasswordVisible] = useState(false);
   const router = useRouter();
+
+  const context = useContext(Context);
+
+  if (!context) {
+    throw new Error("Context must be used within a ContextProvider");
+  }
+
+  const { userId, setUserId } = context;
 
   // Effect that runs whenever userId is updated
   useEffect(() => {
