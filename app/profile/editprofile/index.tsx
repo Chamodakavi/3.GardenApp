@@ -1,10 +1,11 @@
+import { Context } from "@/app/Context";
+import { database } from "@/Data/FConfig";
 import { Link } from "expo-router";
-import React from "react";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import React, { useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
-  Dimensions,
-  Image,
   ScrollView,
   Text,
   TextInput,
@@ -14,12 +15,73 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import Icon from "react-native-vector-icons/Ionicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const { height, width } = Dimensions.get("window");
-
 export default function EditProfile() {
+  const context = useContext(Context);
+
+  if (!context) {
+    throw new Error("Context must be used within a ContextProvider");
+  }
+
+  const { userId } = context;
+
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [tp, setTp] = useState("");
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (userId) {
+      const fetchUser = async () => {
+        try {
+          const userRef = doc(database, "users", userId);
+          const docSnap = await getDoc(userRef);
+
+          if (docSnap.exists()) {
+            const userData = docSnap.data();
+            setName(userData.name || "");
+            setAddress(userData.address || "");
+            setEmail(userData.email || "");
+            setTp(userData.tp || "");
+            setPassword(userData.password || "");
+          } else {
+            console.log("No user found with id:", userId);
+          }
+        } catch (error) {
+          console.error("Error fetching user:", error);
+        }
+      };
+
+      fetchUser();
+    }
+  }, [userId]);
+
+  const handleUpdate = async () => {
+    if (!userId) {
+      console.error("User ID is missing");
+      return;
+    }
+
+    try {
+      const userRef = doc(database, "users", userId);
+      await updateDoc(userRef, {
+        name,
+        address,
+        email,
+        tp,
+        password,
+      });
+
+      console.log("Profile updated successfully!");
+      alert("Profile updated successfully!");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Failed to update profile!");
+    }
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -30,22 +92,34 @@ export default function EditProfile() {
         <View style={styles.main}>
           <View>
             <Text style={styles.txt}>Name :</Text>
-            <TextInput style={styles.input} value="John Doe" />
+            <TextInput
+              style={styles.input}
+              value={name}
+              onChangeText={setName}
+            />
           </View>
 
           <View>
             <Text style={styles.txt}>Address :</Text>
-            <TextInput style={styles.input} value="123 Street, City" />
+            <TextInput
+              style={styles.input}
+              value={address}
+              onChangeText={setAddress}
+            />
           </View>
 
           <View>
             <Text style={styles.txt}>Email :</Text>
-            <TextInput style={styles.input} value="johndoe@example.com" />
+            <TextInput
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+            />
           </View>
 
           <View>
             <Text style={styles.txt}>Mobile No :</Text>
-            <TextInput style={styles.input} value="1234567890" />
+            <TextInput style={styles.input} value={tp} onChangeText={setTp} />
           </View>
 
           <View>
@@ -53,37 +127,25 @@ export default function EditProfile() {
             <TextInput
               style={styles.input}
               secureTextEntry={true}
-              value="password"
+              value={password}
+              onChangeText={setPassword}
             />
           </View>
 
-          <TouchableOpacity style={styles.updateButton}>
+          <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
             <Text style={styles.btn}>Update Profile</Text>
           </TouchableOpacity>
 
-          <View
-            style={{
-              flexDirection: "row",
-              position: "relative",
-              left: wp(55),
-              top: hp(5),
-            }}
-          >
+          <View style={{ flexDirection: "row", marginTop: hp(5) }}>
             <Link href="/profile">
-              {" "}
-              <View style={{marginTop:hp(1.4)}}><Ionicons name="arrow-back" size={hp(2.9)} color="blue" /></View>
-              <Text
-                style={{
-                  fontSize: wp(4),
-                  color: "blue",
-                  marginLeft: wp(50),
-                }}
-              >
-                Back
-              </Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Ionicons name="arrow-back" size={hp(3)} color="blue" />
+                <Text style={{ fontSize: wp(4), color: "blue", marginLeft: 5 }}>
+                  Back
+                </Text>
+              </View>
             </Link>
           </View>
-
         </View>
       </View>
     </ScrollView>
@@ -98,26 +160,24 @@ const styles = StyleSheet.create({
   header: {
     height: hp(8),
     backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
   },
   main: {
-    height: hp(92),
     paddingLeft: wp(5),
     paddingTop: hp(5),
-    display: "flex",
   },
   txt: {
     fontSize: wp(4),
+    marginBottom: hp(1),
   },
   headerTxt: {
     fontSize: wp(5),
-    paddingTop: hp(2),
-    paddingLeft: wp(3),
-    letterSpacing: 7,
+    fontWeight: "bold",
   },
   input: {
     width: wp(90),
     borderBottomColor: "#111",
-    borderStyle: "solid",
     borderBottomWidth: 2,
     fontSize: wp(4),
     marginBottom: hp(2),
@@ -126,16 +186,15 @@ const styles = StyleSheet.create({
   updateButton: {
     width: wp(80),
     marginTop: hp(5),
-    display: "flex",
     alignItems: "center",
-    marginLeft: wp(4),
+    alignSelf: "center",
   },
   btn: {
     backgroundColor: "#228008",
     width: "100%",
     textAlign: "center",
-    lineHeight: hp(6),
-    borderRadius: hp(2),
+    paddingVertical: hp(1.5),
+    borderRadius: hp(1),
     color: "white",
     fontSize: wp(5),
   },
