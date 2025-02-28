@@ -21,7 +21,12 @@ export default function Footer() {
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.footerItem}
+        // style={styles.footerItem}
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          marginLeft: wp(4),
+        }}
         onPress={() => router.push("/swl")}
       >
         <Icon name="tree" size={hp(3)} color="#228008" />
@@ -29,7 +34,10 @@ export default function Footer() {
       </TouchableOpacity>
 
       <TouchableOpacity>
-        <Image source={require('../assets/images/a.png')} style={{width:wp(14), height:hp(10) }}/>
+        <Image
+          source={require("../assets/images/a.png")}
+          style={{ width: wp(14), height: hp(10), marginLeft: wp(5) }}
+        />
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -59,7 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     height: hp(8),
     paddingHorizontal: wp(3),
-    overflow:'hidden',
+    overflow: "hidden",
   },
   footerItem: {
     alignItems: "center",

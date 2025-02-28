@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer";
 import { Link } from "expo-router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -20,10 +20,35 @@ import {
 import ProductCard from "../../components/ProductCard";
 
 import { seeds, tools } from "@/Data/Data";
+import { database } from "@/Data/FConfig";
+import { collection, getDocs } from "firebase/firestore";
 
 const { height, width } = Dimensions.get("window");
 
 export default function Seeds() {
+  const [fbSeeds, setFbSeeds] = useState<{ id: string; [key: string]: any }[]>(
+    []
+  );
+
+  useEffect(() => {
+    const fetchSeeds = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(database, "seeds"));
+        const seedsArray = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setFbSeeds(seedsArray);
+      } catch (error) {
+        console.error("Error fetching seeds:", error);
+      }
+    };
+
+    fetchSeeds();
+  }, []);
+
+  console.log(fbSeeds);
+
   return (
     <ImageBackground
       style={styles.container}
@@ -51,25 +76,27 @@ export default function Seeds() {
           <View style={{ width: wp(100), marginVertical: hp(1) }}>
             <View style={styles.containero}>
               {tools.map((tool) => (
-                <View style={styles.gridItem} key={tool.index}>
+                <View style={styles.gridItem}>
                   <ProductCard
                     title={tool.name}
                     para={tool.description}
                     price={tool.price}
                     image={tool.image}
+                    key={tool.index}
                   />
                 </View>
               ))}
             </View>
 
             <View style={styles.containero}>
-              {seeds.map((seed) => (
-                <View style={styles.gridItem} key={seed.index}>
+              {fbSeeds.map((seed) => (
+                <View style={styles.gridItem}>
                   <ProductCard
                     title={seed.name}
                     para={seed.description}
                     price={seed.price}
                     image={seed.image}
+                    key={seed.index}
                   />
                 </View>
               ))}

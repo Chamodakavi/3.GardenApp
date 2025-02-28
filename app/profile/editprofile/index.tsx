@@ -11,6 +11,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { SkypeIndicator } from "react-native-indicators";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -32,9 +33,12 @@ export default function EditProfile() {
   const [tp, setTp] = useState("");
   const [password, setPassword] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (userId) {
       const fetchUser = async () => {
+        setLoading(true);
         try {
           const userRef = doc(database, "users", userId);
           const docSnap = await getDoc(userRef);
@@ -46,6 +50,7 @@ export default function EditProfile() {
             setEmail(userData.email || "");
             setTp(userData.tp || "");
             setPassword(userData.password || "");
+            setLoading(false);
           } else {
             console.log("No user found with id:", userId);
           }
@@ -66,6 +71,7 @@ export default function EditProfile() {
 
     try {
       const userRef = doc(database, "users", userId);
+      setLoading(true);
       await updateDoc(userRef, {
         name,
         address,
@@ -73,7 +79,7 @@ export default function EditProfile() {
         tp,
         password,
       });
-
+      setLoading(false);
       console.log("Profile updated successfully!");
       alert("Profile updated successfully!");
     } catch (error) {
@@ -85,68 +91,92 @@ export default function EditProfile() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerTxt}>Edit Profile</Text>
-        </View>
-
-        <View style={styles.main}>
-          <View>
-            <Text style={styles.txt}>Name :</Text>
-            <TextInput
-              style={styles.input}
-              value={name}
-              onChangeText={setName}
-            />
+        {loading ? (
+          <View
+            style={{
+              zIndex: 999,
+              position: "fixed",
+              top: hp(50),
+            }}
+          >
+            {/* <Text>loading...</Text> */}
+            <SkypeIndicator />
           </View>
+        ) : (
+          <>
+            <View style={styles.header}>
+              <Text style={styles.headerTxt}>Edit Profile</Text>
+            </View>
 
-          <View>
-            <Text style={styles.txt}>Address :</Text>
-            <TextInput
-              style={styles.input}
-              value={address}
-              onChangeText={setAddress}
-            />
-          </View>
-
-          <View>
-            <Text style={styles.txt}>Email :</Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-            />
-          </View>
-
-          <View>
-            <Text style={styles.txt}>Mobile No :</Text>
-            <TextInput style={styles.input} value={tp} onChangeText={setTp} />
-          </View>
-
-          <View>
-            <Text style={styles.txt}>Password :</Text>
-            <TextInput
-              style={styles.input}
-              secureTextEntry={true}
-              value={password}
-              onChangeText={setPassword}
-            />
-          </View>
-
-          <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
-            <Text style={styles.btn}>Update Profile</Text>
-          </TouchableOpacity>
-
-          <View style={{ flexDirection: "row", marginTop: hp(5) }}>
-            <Link href="/profile">
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Ionicons name="arrow-back" size={hp(3)} color="blue" />
-                <Text style={{ fontSize: wp(4), color: "blue", marginLeft: 5 }}>
-                  Back
-                </Text>
+            <View style={styles.main}>
+              <View>
+                <Text style={styles.txt}>Name :</Text>
+                <TextInput
+                  style={styles.input}
+                  value={name}
+                  onChangeText={setName}
+                />
               </View>
-            </Link>
-          </View>
-        </View>
+
+              <View>
+                <Text style={styles.txt}>Address :</Text>
+                <TextInput
+                  style={styles.input}
+                  value={address}
+                  onChangeText={setAddress}
+                />
+              </View>
+
+              <View>
+                <Text style={styles.txt}>Email :</Text>
+                <TextInput
+                  style={styles.input}
+                  value={email}
+                  onChangeText={setEmail}
+                />
+              </View>
+
+              <View>
+                <Text style={styles.txt}>Mobile No :</Text>
+                <TextInput
+                  style={styles.input}
+                  value={tp}
+                  onChangeText={setTp}
+                />
+              </View>
+
+              <View>
+                <Text style={styles.txt}>Password :</Text>
+                <TextInput
+                  style={styles.input}
+                  secureTextEntry={true}
+                  value={password}
+                  onChangeText={setPassword}
+                />
+              </View>
+
+              <TouchableOpacity
+                style={styles.updateButton}
+                onPress={handleUpdate}
+              >
+                <Text style={styles.btn}>Update Profile</Text>
+              </TouchableOpacity>
+
+              <View style={{ flexDirection: "row", marginTop: hp(5) }}>
+                <Link href="/profile">
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Ionicons name="arrow-back" size={hp(3)} color="blue" />
+                    <Text
+                      style={{ fontSize: wp(4), color: "blue", marginLeft: 5 }}
+                    >
+                      Back
+                    </Text>
+                  </View>
+                </Link>
+              </View>
+            </View>
+          </>
+        )}
       </View>
     </ScrollView>
   );
@@ -173,7 +203,9 @@ const styles = StyleSheet.create({
   },
   headerTxt: {
     fontSize: wp(5),
-    fontWeight: "bold",
+    paddingTop: hp(2),
+    paddingLeft: wp(3),
+    letterSpacing: 7,
   },
   input: {
     width: wp(90),
