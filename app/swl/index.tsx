@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer";
 import { Link } from "expo-router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -18,15 +18,38 @@ import {
 } from "react-native-responsive-screen";
 
 import { instructions } from "@/Data/Data";
-
+import { database } from "@/Data/FConfig";
 
 import PlantCard from "../../components/PlantCard";
+import { collection, getDocs } from "firebase/firestore";
+import { SkypeIndicator } from "react-native-indicators";
 
 const { height, width } = Dimensions.get("window");
 
-
-
 export default function SWL() {
+  const [fbInstructions, setfbInstructions] = useState<
+    { id: string; [key: string]: any }[]
+  >([]);
+
+  useEffect(() => {
+    const fetchInstructions = async () => {
+      try {
+        const querySnapshot = await getDocs(
+          collection(database, "instructions")
+        );
+        const toolsArray = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setfbInstructions(toolsArray);
+      } catch (error) {
+        console.error("Error fetching tools:", error);
+      }
+    };
+
+    fetchInstructions();
+  }, []);
+
   return (
     <ImageBackground
       style={styles.container}
@@ -54,16 +77,22 @@ export default function SWL() {
         <View style={styles.main}>
           <View style={{ width: wp(100), marginVertical: hp(1) }}>
             <View style={styles.containero}>
-              {instructions.map((item) => (
-                <View style={styles.gridItem} key={item.index}>
-                  <PlantCard
-                    index={item.index}
-                    name={item.name}
-                    image={item.image}
-                    guide={item.guide} 
-                  />
+              {fbInstructions.length === 0 ? (
+                <View style={styles.loadingContainer}>
+                  <SkypeIndicator size={40} color="black" />
                 </View>
-              ))}
+              ) : (
+                fbInstructions.map((item, index) => (
+                  <View style={styles.gridItem} key={item.id || index}>
+                    <PlantCard
+                      index={index}
+                      name={item.name}
+                      image={item.image}
+                      guide={item.guide}
+                    />
+                  </View>
+                ))
+              )}
             </View>
           </View>
         </View>
@@ -155,5 +184,11 @@ const styles = StyleSheet.create({
   gridText: {
     color: "white",
     fontSize: wp(4),
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    height: hp(80), // Adjust as needed
   },
 });

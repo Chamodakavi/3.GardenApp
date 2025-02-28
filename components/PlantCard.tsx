@@ -12,6 +12,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { database } from "@/Data/FConfig";
 
 // Define the structure of each instruction step
 interface Instruction {
@@ -37,7 +38,6 @@ export default function PlantCard({
   image,
   guide,
 }: PlantCardProps) {
-
   return (
     <TouchableOpacity>
       <Link

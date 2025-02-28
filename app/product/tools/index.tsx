@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer";
 import { Link } from "expo-router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -20,10 +20,33 @@ import {
 import ProductCard from "../../../components/ProductCard";
 
 import { seeds, tools } from "@/Data/Data";
+import { collection, getDocs } from "firebase/firestore";
+import { database } from "@/Data/FConfig";
 
 const { height, width } = Dimensions.get("window");
 
 export default function Seeds() {
+  const [fbTools, setFbTools] = useState<{ id: string; [key: string]: any }[]>(
+    []
+  );
+
+  useEffect(() => {
+    const fetchTools = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(database, "tools"));
+        const toolsArray = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setFbTools(toolsArray);
+      } catch (error) {
+        console.error("Error fetching tools:", error);
+      }
+    };
+
+    fetchTools();
+  }, []);
+
   return (
     <ImageBackground
       style={styles.container}
@@ -50,7 +73,7 @@ export default function Seeds() {
         <View style={styles.main}>
           <View style={{ width: wp(100), marginVertical: hp(1) }}>
             <View style={styles.containero}>
-              {tools.map((tool) => (
+              {fbTools.map((tool) => (
                 <View style={styles.gridItem} key={tool.index}>
                   <ProductCard
                     title={tool.name}

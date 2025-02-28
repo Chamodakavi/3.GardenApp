@@ -16,6 +16,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { database } from "@/Data/FConfig";
 
 const { width, height } = Dimensions.get("window");
 
@@ -35,7 +36,6 @@ const OnboardingScreen = () => {
 
   // Parse the guide array safely
   const parsedGuide: Instruction[] = guide ? JSON.parse(guide) : [];
-
 
   const navigation = useNavigation();
   const [stepIndex, setStepIndex] = useState(0);
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   title: {
     position: "absolute",
     top: hp(5),
-    left:wp(5),
+    left: wp(5),
     fontSize: wp(6),
     fontWeight: "bold",
     color: "#228008",
