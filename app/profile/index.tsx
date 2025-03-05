@@ -31,8 +31,13 @@ export default function Profile() {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [name, setName] = useState("");
+
   const handleeditprofile = () => {
     router.push("/profile/editprofile");
+  };
+
+  const handleCart = () => {
+    router.push("/cart");
   };
 
   const context = useContext(Context);
@@ -111,13 +116,14 @@ export default function Profile() {
           <Text style={styles.title}>My Orders</Text>
 
           <View style={styles.orderContainer}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleCart}>
               <View style={styles.iconContainer}>
                 <MaterialIcons
                   name="shopping-cart"
                   size={wp(10)}
                   color="#228008"
                 />
+
                 <Text style={styles.iconText}>Cart</Text>
               </View>
             </TouchableOpacity>
