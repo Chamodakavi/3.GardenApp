@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer";
 import { Link, useNavigation } from "expo-router";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
+  Alert,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -18,23 +19,94 @@ import {
 } from "react-native-responsive-screen";
 
 import ProductCard from "../../../components/ProductCard";
+import CartNotification from "@/components/CartNotification";
 
 import { seeds, tools } from "@/Data/Data";
 import { useGlobalSearchParams } from "expo-router";
 
 import { Ionicons } from "@expo/vector-icons";
+import { Context } from "@/app/Context";
+import { database } from "@/Data/FConfig";
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 
 const { height, width } = Dimensions.get("window");
 
 export default function Seeds({ route }: { route: any }) {
   const { title, para, price, image } = useGlobalSearchParams();
-
   const [quantity, setQuantity] = useState(1);
-
   const increaseQuantity = () => setQuantity(quantity + 1);
   const decreaseQuantity = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
-
+  const [isNotificationVisible, setIsNotificationVisible] = useState(false);
   const navigation = useNavigation();
+
+  const context = useContext(Context);
+  if (!context) {
+    throw new Error("Context must be used within a ContextProvider");
+  }
+
+  const { cart, setCart, userId, order, setOrder } = context;
+
+  const handleAddtoCart = async () => {
+    if (!userId) {
+      Alert.alert("Please log in to add items to your cart.");
+      return;
+    }
+
+    try {
+      // Reference to the 'cart' subcollection inside the user's document
+      const cartRef = collection(database, "users", userId, "cart");
+
+      // Add a new cart item as a document inside the 'cart' subcollection
+      await addDoc(cartRef, {
+        title: title,
+        price: price,
+        image: image,
+        quantity: quantity,
+        timestamp: new Date(), // Optional: Helps track when the item was added
+      });
+
+      console.log("Item added to cart.");
+      setCart(cart + 1);
+      setIsNotificationVisible(true);
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      Alert.alert("Failed to add item to cart.");
+    }
+  };
+
+  const handleOrder = async () => {
+    if (!userId) {
+      Alert.alert("Please log in to order items.");
+      return;
+    }
+
+    try {
+      // Reference to the 'order' subcollection inside the user's document
+      const cartRef = collection(database, "users", userId, "order");
+
+      // Add a new order item as a document inside the 'order' subcollection
+      await addDoc(cartRef, {
+        title: title,
+        price: price,
+        image: image,
+        quantity: quantity,
+        timestamp: new Date(),
+      });
+
+      console.log("Item ordered.");
+      setCart(cart + 1);
+      setIsNotificationVisible(true);
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      Alert.alert("Failed to add item to cart.");
+    }
+  };
 
   return (
     <ScrollView style={detailsStyles.container}>
@@ -81,13 +153,23 @@ export default function Seeds({ route }: { route: any }) {
       </View>
 
       <View style={detailsStyles.buttonContainer}>
-        <TouchableOpacity style={detailsStyles.button}>
+        <TouchableOpacity
+          style={detailsStyles.button}
+          onPress={handleAddtoCart}
+        >
           <Text style={detailsStyles.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={detailsStyles.buttonBuyNow}>
+        <TouchableOpacity
+          style={detailsStyles.buttonBuyNow}
+          onPress={handleOrder}
+        >
           <Text style={detailsStyles.buttonText}>Buy Now</Text>
         </TouchableOpacity>
       </View>
+      <CartNotification
+        isVisible={isNotificationVisible}
+        onHide={() => setIsNotificationVisible(false)}
+      />
     </ScrollView>
   );
 }

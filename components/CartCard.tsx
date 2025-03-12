@@ -15,23 +15,28 @@ import {
 
 const { height, width } = Dimensions.get("window");
 
-function CartCard() {
+interface cartProps {
+  title: string;
+  img: any;
+  price: string;
+  qty: number;
+}
+
+function CartCard({ title, img, price, qty }: cartProps) {
+  console.log("CartCard received props:", { title, img, price, qty });
+
   return (
     <View style={styles.container}>
       {/* Image Section */}
       <View style={styles.imageContainer}>
-        <Image
-          source={{ uri: "https://dummyimage.com/600x400/000/fff" }}
-          resizeMode="cover"
-          style={styles.image}
-        />
+        <Image source={{ uri: img }} resizeMode="cover" style={styles.image} />
       </View>
 
       {/* Info Section */}
       <View style={styles.infoContainer}>
-        <Text style={styles.title}>Product Title</Text>
-        <Text style={styles.price}>$20.00</Text>
-        <Text style={styles.qty}>Qty:2</Text>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.price}>{price}</Text>
+        <Text style={styles.qty}>Qty:{qty}</Text>
       </View>
 
       {/* Button Section */}

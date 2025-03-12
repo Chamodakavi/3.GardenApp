@@ -4,7 +4,7 @@ import { Slot } from "expo-router";
 import { StatusBar, useColorScheme } from "react-native";
 
 export default function App() {
-  const theme = useColorScheme(); // Detect system theme (light/dark)
+  const theme = useColorScheme();
 
   return (
     <>

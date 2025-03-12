@@ -37,20 +37,20 @@ function index() {
           return;
         }
 
-        const cartRef = collection(database, "users", userId, "cart");
+        const cartRef = collection(database, "users", userId, "order");
         const querySnapshot = await getDocs(cartRef);
 
         if (querySnapshot.empty) {
-          console.log("No items found in cart.");
+          console.log("No items ordered.");
           return;
         }
 
-        const cartItems = querySnapshot.docs.map((doc) => ({
+        const orderItems = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
 
-        setItems(cartItems);
+        setItems(orderItems);
       } catch (error) {
         console.error("Error fetching items:", error);
       }
@@ -70,7 +70,7 @@ function index() {
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.header}>
           <Text style={styles.headerText}>
-            Cart <Text style={{ color: "#228008" }}>Items</Text>
+            Order <Text style={{ color: "#228008" }}>Items</Text>
           </Text>
           <Text style={styles.headerPara}>
             Nurture Your Garden, Nurture the Earth

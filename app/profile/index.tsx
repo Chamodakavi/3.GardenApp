@@ -37,7 +37,13 @@ export default function Profile() {
   };
 
   const handleCart = () => {
+    setCart(0);
     router.push("/cart");
+  };
+
+  const handleOrder = () => {
+    setCart(0);
+    router.push("/order");
   };
 
   const context = useContext(Context);
@@ -46,24 +52,19 @@ export default function Profile() {
     throw new Error("Context must be used within a ContextProvider");
   }
 
-  const { userId, setUserId } = context;
+  const { userId, setUserId, cart, setCart } = context;
 
   const logout = () => {
     setUserId("");
-    console.log("clear uid :" + userId);
-
     router.replace("/");
   };
 
   useEffect(() => {
     if (data) {
-      console.log("User ID updated: ", userId);
       setData(data);
-      console.log(data);
       setName(data.name);
     }
   }, [data]);
-  console.log(name);
   useEffect(() => {
     if (userId) {
       const fetchUser = async () => {
@@ -117,6 +118,12 @@ export default function Profile() {
 
           <View style={styles.orderContainer}>
             <TouchableOpacity onPress={handleCart}>
+              {cart > 0 && (
+                <View style={styles.badge}>
+                  <Text style={styles.badgeText}>{cart}</Text>
+                </View>
+              )}
+
               <View style={styles.iconContainer}>
                 <MaterialIcons
                   name="shopping-cart"
@@ -128,7 +135,10 @@ export default function Profile() {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleCart}>
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>1</Text>
+              </View>
               <View style={styles.iconContainer}>
                 <FontAwesome5
                   name="clipboard-list"
@@ -254,5 +264,24 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff", // White text color
     textAlign: "center",
+  },
+  badge: {
+    position: "absolute",
+    top: 2,
+    right: -2,
+    backgroundColor: "red",
+    width: wp(5),
+    height: wp(5),
+    borderRadius: wp(2.5), // Makes it a perfect circle
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#fff",
+    zIndex: 999,
+  },
+  badgeText: {
+    color: "#fff",
+    fontSize: wp(3),
+    fontWeight: "bold",
   },
 });
