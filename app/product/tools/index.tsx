@@ -22,6 +22,7 @@ import ProductCard from "../../../components/ProductCard";
 import { seeds, tools } from "@/Data/Data";
 import { collection, getDocs } from "firebase/firestore";
 import { database } from "@/Data/FConfig";
+import { SkypeIndicator } from "react-native-indicators";
 
 const { height, width } = Dimensions.get("window");
 
@@ -29,9 +30,11 @@ export default function Seeds() {
   const [fbTools, setFbTools] = useState<{ id: string; [key: string]: any }[]>(
     []
   );
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchTools = async () => {
+      setLoading(true);
       try {
         const querySnapshot = await getDocs(collection(database, "tools"));
         const toolsArray = querySnapshot.docs.map((doc) => ({
@@ -41,6 +44,8 @@ export default function Seeds() {
         setFbTools(toolsArray);
       } catch (error) {
         console.error("Error fetching tools:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -73,16 +78,30 @@ export default function Seeds() {
         <View style={styles.main}>
           <View style={{ width: wp(100), marginVertical: hp(1) }}>
             <View style={styles.containero}>
-              {fbTools.map((tool) => (
-                <View style={styles.gridItem} key={tool.index}>
-                  <ProductCard
-                    title={tool.name}
-                    para={tool.description}
-                    price={tool.price}
-                    image={tool.image}
-                  />
+              {loading ? (
+                <View
+                  style={{
+                    zIndex: 999,
+                    position: "fixed",
+                    top: hp(50),
+                  }}
+                >
+                  <SkypeIndicator />
                 </View>
-              ))}
+              ) : (
+                fbTools.map((tool) => (
+                  <View style={styles.gridItem} key={tool.id}>
+                    <ProductCard
+                      id={tool.id}
+                      title={tool.name}
+                      para={tool.description}
+                      price={tool.price}
+                      image={tool.image}
+                      key={tool.id}
+                    />
+                  </View>
+                ))
+              )}
             </View>
           </View>
         </View>

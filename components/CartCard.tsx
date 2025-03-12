@@ -16,17 +16,32 @@ import {
 const { height, width } = Dimensions.get("window");
 
 interface cartProps {
+  productId: string;
   title: string;
   img: any;
   price: string;
   qty: number;
   onDelete: (id: string) => void;
+  onOrder: (id: string) => void;
   id: string;
 }
 
-function CartCard({ title, img, price, qty, onDelete, id }: cartProps) {
+function CartCard({
+  productId,
+  title,
+  img,
+  price,
+  qty,
+  onDelete,
+  id,
+  onOrder,
+}: cartProps) {
   const handleDelete = () => {
     onDelete(id);
+  };
+
+  const handleOrder = () => {
+    onOrder(productId);
   };
 
   return (
@@ -45,7 +60,10 @@ function CartCard({ title, img, price, qty, onDelete, id }: cartProps) {
 
       {/* Button Section */}
       <View style={styles.btnContainer}>
-        <TouchableOpacity style={[styles.button, styles.orderButton]}>
+        <TouchableOpacity
+          style={[styles.button, styles.orderButton]}
+          onPress={handleOrder}
+        >
           <Text style={styles.buttonText}>Order</Text>
         </TouchableOpacity>
         <TouchableOpacity

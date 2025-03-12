@@ -22,6 +22,7 @@ import ProductCard from "../../../components/ProductCard";
 import { seeds, tools } from "@/Data/Data";
 import { collection, getDocs } from "firebase/firestore";
 import { database } from "@/Data/FConfig";
+import { SkypeIndicator } from "react-native-indicators";
 
 const { height, width } = Dimensions.get("window");
 
@@ -29,8 +30,11 @@ export default function Seeds() {
   const [fbSeeds, setFbSeeds] = useState<{ id: string; [key: string]: any }[]>(
     []
   );
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const fetchSeeds = async () => {
+      setLoading(true);
       try {
         const querySnapshot = await getDocs(collection(database, "seeds"));
         const seedsArray = querySnapshot.docs.map((doc) => ({
@@ -38,8 +42,11 @@ export default function Seeds() {
           ...doc.data(),
         }));
         setFbSeeds(seedsArray);
+        console.log(seedsArray);
       } catch (error) {
         console.error("Error fetching seeds:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -72,16 +79,30 @@ export default function Seeds() {
         <View style={styles.main}>
           <View style={{ width: wp(100), marginVertical: hp(1) }}>
             <View style={styles.containero}>
-              {fbSeeds.map((seed) => (
-                <View style={styles.gridItem} key={seed.index}>
-                  <ProductCard
-                    title={seed.name}
-                    para={seed.description}
-                    price={seed.price}
-                    image={seed.image}
-                  />
+              {loading ? (
+                <View
+                  style={{
+                    zIndex: 999,
+                    position: "fixed",
+                    top: hp(50),
+                  }}
+                >
+                  <SkypeIndicator />
                 </View>
-              ))}
+              ) : (
+                fbSeeds.map((seed) => (
+                  <View style={styles.gridItem} key={seed.id}>
+                    <ProductCard
+                      id={seed.id}
+                      title={seed.name}
+                      para={seed.description}
+                      price={seed.price}
+                      image={seed.image}
+                      key={seed.id}
+                    />
+                  </View>
+                ))
+              )}
             </View>
           </View>
         </View>

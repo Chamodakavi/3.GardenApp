@@ -100,11 +100,12 @@ export default function Seeds() {
                 {fbTools.map((tool) => (
                   <View style={styles.gridItem}>
                     <ProductCard
+                      id={tool.id}
                       title={tool.name}
                       para={tool.description}
                       price={tool.price}
                       image={tool.image}
-                      key={tool.index}
+                      key={tool.id}
                     />
                   </View>
                 ))}
@@ -114,6 +115,7 @@ export default function Seeds() {
                 {fbSeeds.map((seed) => (
                   <View style={styles.gridItem}>
                     <ProductCard
+                      id={seed.id}
                       title={seed.name}
                       para={seed.description}
                       price={seed.price}

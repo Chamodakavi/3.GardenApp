@@ -39,7 +39,7 @@ import {
 const { height, width } = Dimensions.get("window");
 
 export default function Seeds({ route }: { route: any }) {
-  const { title, para, price, image } = useGlobalSearchParams();
+  const { id, title, para, price, image } = useGlobalSearchParams();
   const [quantity, setQuantity] = useState(1);
   const increaseQuantity = () => setQuantity(quantity + 1);
   const decreaseQuantity = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
@@ -68,6 +68,7 @@ export default function Seeds({ route }: { route: any }) {
 
       // Add a new cart item as a document inside the 'cart' subcollection
       await addDoc(cartRef, {
+        productId: id,
         title: title,
         price: price,
         image: image,
@@ -101,6 +102,7 @@ export default function Seeds({ route }: { route: any }) {
         image: image,
         quantity: quantity,
         timestamp: new Date(),
+        productId: id,
       });
 
       console.log("Item ordered.");

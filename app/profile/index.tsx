@@ -74,7 +74,6 @@ export default function Profile() {
 
           if (docSnap.exists()) {
             setData(docSnap.data() as any);
-            console.log("User Data:", docSnap.data());
           } else {
             console.log("No user found with id:", userId);
           }

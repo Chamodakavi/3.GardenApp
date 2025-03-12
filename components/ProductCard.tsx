@@ -15,6 +15,7 @@ import {
 
 // Define the prop types using an interface
 interface ProductCardProps {
+  id: string;
   title: string;
   para: string;
   price: string;
@@ -24,6 +25,7 @@ interface ProductCardProps {
 const { height, width } = Dimensions.get("window");
 
 export default function ProductCard({
+  id,
   title,
   para,
   price,
@@ -34,7 +36,7 @@ export default function ProductCard({
       <Link
         href={{
           pathname: "/product/details",
-          params: { title, para, price, image },
+          params: { id, title, para, price, image },
         }}
       >
         <View style={styles.container}>

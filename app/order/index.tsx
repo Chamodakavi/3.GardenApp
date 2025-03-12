@@ -10,6 +10,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { database } from "@/Data/FConfig";
 import { Context } from "@/app/Context";
 import OrderCard from "@/components/OrderCard";
+import { SkypeIndicator } from "react-native-indicators";
 
 const { height, width } = Dimensions.get("window");
 
@@ -32,6 +33,7 @@ function index() {
 
   useEffect(() => {
     const fetchItems = async () => {
+      setLoading(true);
       try {
         if (!userId) {
           console.error("No userId found!");
@@ -54,6 +56,8 @@ function index() {
         setItems(orderItems);
       } catch (error) {
         console.error("Error fetching items:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -77,19 +81,30 @@ function index() {
             Nurture Your Garden, Nurture the Earth
           </Text>
         </View>
-
-        {items.map((item) => {
-          console.log("Item passed to CartCard:", item);
-          return (
-            <OrderCard
-              title={item.title}
-              img={item.image}
-              price={item.price}
-              qty={item.quantity}
-              key={item.id}
-            />
-          );
-        })}
+        {loading ? (
+          <View
+            style={{
+              zIndex: 999,
+              position: "relative",
+              top: hp(30),
+            }}
+          >
+            <SkypeIndicator />
+          </View>
+        ) : (
+          items.map((item) => {
+            console.log("Item passed to CartCard:", item);
+            return (
+              <OrderCard
+                title={item.title}
+                img={item.image}
+                price={item.price}
+                qty={item.quantity}
+                key={item.id}
+              />
+            );
+          })
+        )}
       </ScrollView>
       <Footer />
     </View>
