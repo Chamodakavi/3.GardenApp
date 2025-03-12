@@ -6,7 +6,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { database } from "@/Data/FConfig";
 import { Context } from "@/app/Context";
 
@@ -65,6 +65,16 @@ function index() {
     console.log("Updated Items:", items);
   }, [items]);
 
+  const handleDeleteItem = async (id: string) => {
+    try {
+      await deleteDoc(doc(database, "users", userId, "cart", id));
+      setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+      console.log("Item deleted:", id);
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -86,6 +96,8 @@ function index() {
               price={item.price}
               qty={item.quantity}
               key={item.id}
+              id={item.id}
+              onDelete={handleDeleteItem}
             />
           );
         })}

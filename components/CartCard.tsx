@@ -20,10 +20,14 @@ interface cartProps {
   img: any;
   price: string;
   qty: number;
+  onDelete: (id: string) => void;
+  id: string;
 }
 
-function CartCard({ title, img, price, qty }: cartProps) {
-  console.log("CartCard received props:", { title, img, price, qty });
+function CartCard({ title, img, price, qty, onDelete, id }: cartProps) {
+  const handleDelete = () => {
+    onDelete(id);
+  };
 
   return (
     <View style={styles.container}>
@@ -44,7 +48,10 @@ function CartCard({ title, img, price, qty }: cartProps) {
         <TouchableOpacity style={[styles.button, styles.orderButton]}>
           <Text style={styles.buttonText}>Order</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.deleteButton]}>
+        <TouchableOpacity
+          style={[styles.button, styles.deleteButton]}
+          onPress={handleDelete}
+        >
           <Text style={styles.buttonText}>Delete</Text>
         </TouchableOpacity>
       </View>

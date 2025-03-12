@@ -9,6 +9,7 @@ import {
 import { collection, getDocs } from "firebase/firestore";
 import { database } from "@/Data/FConfig";
 import { Context } from "@/app/Context";
+import OrderCard from "@/components/OrderCard";
 
 const { height, width } = Dimensions.get("window");
 
@@ -80,7 +81,7 @@ function index() {
         {items.map((item) => {
           console.log("Item passed to CartCard:", item);
           return (
-            <CartCard
+            <OrderCard
               title={item.title}
               img={item.image}
               price={item.price}

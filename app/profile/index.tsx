@@ -32,6 +32,14 @@ export default function Profile() {
   const [data, setData] = useState<any>(null);
   const [name, setName] = useState("");
 
+  const context = useContext(Context);
+
+  if (!context) {
+    throw new Error("Context must be used within a ContextProvider");
+  }
+
+  const { userId, setUserId, cart, setCart, order, setOrder } = context;
+
   const handleeditprofile = () => {
     router.push("/profile/editprofile");
   };
@@ -42,17 +50,9 @@ export default function Profile() {
   };
 
   const handleOrder = () => {
-    setCart(0);
+    setOrder(0);
     router.push("/order");
   };
-
-  const context = useContext(Context);
-
-  if (!context) {
-    throw new Error("Context must be used within a ContextProvider");
-  }
-
-  const { userId, setUserId, cart, setCart } = context;
 
   const logout = () => {
     setUserId("");
@@ -135,10 +135,12 @@ export default function Profile() {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleCart}>
-              <View style={styles.badge}>
-                <Text style={styles.badgeText}>1</Text>
-              </View>
+            <TouchableOpacity onPress={handleOrder}>
+              {order > 0 && (
+                <View style={styles.badge}>
+                  <Text style={styles.badgeText}>{order}</Text>
+                </View>
+              )}
               <View style={styles.iconContainer}>
                 <FontAwesome5
                   name="clipboard-list"

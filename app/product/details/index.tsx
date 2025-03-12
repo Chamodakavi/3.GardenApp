@@ -20,6 +20,7 @@ import {
 
 import ProductCard from "../../../components/ProductCard";
 import CartNotification from "@/components/CartNotification";
+import OrderNotification from "@/components/OrderNotification";
 
 import { seeds, tools } from "@/Data/Data";
 import { useGlobalSearchParams } from "expo-router";
@@ -43,6 +44,9 @@ export default function Seeds({ route }: { route: any }) {
   const increaseQuantity = () => setQuantity(quantity + 1);
   const decreaseQuantity = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
   const [isNotificationVisible, setIsNotificationVisible] = useState(false);
+  const [isOrderNotificationVisible, setIsOrderNotificationVisible] =
+    useState(false);
+
   const navigation = useNavigation();
 
   const context = useContext(Context);
@@ -100,8 +104,8 @@ export default function Seeds({ route }: { route: any }) {
       });
 
       console.log("Item ordered.");
-      setCart(cart + 1);
-      setIsNotificationVisible(true);
+      setOrder(order + 1);
+      setIsOrderNotificationVisible(true);
     } catch (error) {
       console.error("Error adding item to cart:", error);
       Alert.alert("Failed to add item to cart.");
@@ -159,6 +163,7 @@ export default function Seeds({ route }: { route: any }) {
         >
           <Text style={detailsStyles.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={detailsStyles.buttonBuyNow}
           onPress={handleOrder}
@@ -166,9 +171,14 @@ export default function Seeds({ route }: { route: any }) {
           <Text style={detailsStyles.buttonText}>Buy Now</Text>
         </TouchableOpacity>
       </View>
+
       <CartNotification
         isVisible={isNotificationVisible}
         onHide={() => setIsNotificationVisible(false)}
+      />
+      <OrderNotification
+        isVisible={isOrderNotificationVisible}
+        onHide={() => setIsOrderNotificationVisible(false)}
       />
     </ScrollView>
   );
