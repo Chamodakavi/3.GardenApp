@@ -30,7 +30,8 @@ jobs:
 
       - name: Push changes to dev branch
         run: |
-          git checkout -b dev  # Create a new dev branch
-          git push origin dev  # Push dev branch to remote
+          git checkout dev  # Ensure you're on dev branch (assumes it already exists)
+          git pull origin dev # Ensure your dev branch is up-to-date
+          git push origin dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
