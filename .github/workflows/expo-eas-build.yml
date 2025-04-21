@@ -22,9 +22,6 @@ jobs:
       - name: 📦 Install dependencies
         run: npm install
 
-      - name: 🧪 Verify Expo project
-        run: npx expo whoami
-
       - name: ⚙️ Install EAS CLI
         run: npm install -g eas-cli
 
