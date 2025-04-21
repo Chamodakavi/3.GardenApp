@@ -28,5 +28,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push changes
-        run: git push --follow-tags origin main
+      - name: Push changes to dev branch
+        run: |
+          git checkout -b dev  # Create a new dev branch
+          git push origin dev  # Push dev branch to remote
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
