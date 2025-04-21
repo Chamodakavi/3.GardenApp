@@ -1,10 +1,10 @@
 {
   "expo": {
     "name": "3.Garden",
-    "slug": "3.Garden",
+    "slug": "garden-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/a.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/a.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.ckavi2001.x3.Garden"
@@ -24,19 +24,28 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
-        }
-      ]
+      "expo-router"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "d37bee75-ab8c-4f78-8e9c-04cd5c829d5e"
+      }
+    },
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "exclude": [
+          "react-native-responsive-screen",
+          "react-native-indicators",
+          "react-native-status-bar-height",
+          "firebase"
+        ]
+      }
     }
   }
 }
