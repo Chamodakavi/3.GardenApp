@@ -14,6 +14,9 @@ jobs:
       - name: 📥 Checkout repo
         uses: actions/checkout@v3
 
+      - name: 📝 Instruction message to uncomment to trigger APK build
+        run: echo "🚀 Please uncomment the necessary steps in the workflow to build the APK."
+
       # - name: 🧰 Set up Node.js
       #   uses: actions/setup-node@v3
       #   with:
