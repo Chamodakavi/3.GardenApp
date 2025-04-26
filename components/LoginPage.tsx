@@ -148,7 +148,7 @@ export default function Welcome() {
               <Text style={styles.inputLabel}>Email address / Username :</Text>
               <TextInput
                 style={styles.input}
-                placeholder=" johndoe@gmail.com"
+                placeholder="johndoe@gmail.com"
                 value={username}
                 onChangeText={(username) => {
                   setUsername(username);
@@ -161,7 +161,7 @@ export default function Welcome() {
               <View style={styles.passwordContainer}>
                 <TextInput
                   style={styles.input}
-                  placeholder=" Enter your password"
+                  placeholder="Enter your password"
                   secureTextEntry={!passwordVisible}
                   value={password}
                   onChangeText={(password) => {
